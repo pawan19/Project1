@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body{
+		background-image:url("boudha.jpg");
+	}
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 30px;
+    margin: 4px 2px;
+    cursor: pointer;
+	margin-left:120px;
+}
+.button1 {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 30px;
+    
+    cursor: pointer;
+	margin-left:120px;
+}
+.button2 {
+    background-color: #555555; /* Green */
+    border: none;
+    color: white;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 25px;
+    
+    cursor: pointer;
+	margin-left:120px;
+}
+	
+.button4 {border-radius: 1px;
+            width: 640px;
+    }
+.button5 {border-radius: 1px;
+     margin-left:150px;        
+    width: 240px;
+    }
+
+</style>
+</head>
+<body>
+
+     <form class="form-horizontal" id="message_form" action="" method="post">
+    <p class="button button4">Enter Daily Data</p><br/>
+    <p class="button1">Enter Current Date</p><input required id="date_id" placeholder="date here" class="button2"           type="text" name="date"/><br/>
+     <p class="button1">No. of Customers &nbsp;&nbsp;</p><input required id="customer_id" placeholder="no of customer       here" class="button2" type="text" name="date"/><br/>
+    <p class="button1">Enter Total Income</p><input required id="income_id" placeholder="no of customer here" class="button2" type="text" name="date"/><br/>
+<p class="button1">Enter Total Expense</p><input id="expense_id" required placeholder="no of customer here" class="button2" type="text" name="date"/><br/>
+
+	<button class="button button5" type="submit" id="submit_form" class="btn btn-lg btn-default">Submit</button>
+	<button class="button button5" type="clear" id="clear_form" class="btn btn-lg btn-default">Clear</button>
+    </form>
+    
+<script type="text/javascript">
+function post_request() {
+    var xhr = new XMLHttpRequest();
+    var params = JSON.stringify({
+        Records:{
+            date: document.getElementById("date_id").value,
+            customer: document.getElementById("customer_id").value,
+            income: document.getElementById("income_id").value,
+            expense: document.getElementById("expense_id").value
+        }
+    });
+    xhr.open("POST", "https://gm056cb4j3.execute-api.us-east-1.amazonaws.com/dev/proj1", true);
+    xhr.setRequestHeader("X-api-key", "7wkAeKj8rJ3CMwInzLYz1152zIQBuXoK9lAAtEHJ");
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.onreadystatechange = function(){
+        if(xhr.readyState === 4){
+            if(xhr.status === 200){
+				a = xhr.responseText;
+				b = JSON.parse(a);
+				console.log(b);
+                alert(b);
+            }
+            else{
+                alert("I was unable to send your data. Please check errors.");
+            }
+        }
+    };
+    xhr.send(params);
+    return false;
+}
+(function() {
+    document.getElementById("message_form").onsubmit = function() {
+        post_request();
+	    return false;
+    }
+})();
+
+</script>
+    
+</body>    
+</html>
+

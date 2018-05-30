@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+	body{
+		background-image:url("boudha.jpg");
+	}
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 30px;
+    margin: 4px 2px;
+    cursor: pointer;
+	margin-left:120px;
+}
+.button1 {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 30px;
+    
+    cursor: pointer;
+	margin-left:120px;
+}
+.button2 {
+    background-color: #555555; /* Green */
+    border: none;
+    color: white;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 25px;
+    
+    cursor: pointer;
+	margin-left:120px;
+}
+	
+.button4 {border-radius: 1px;
+            width: 640px;
+    }
+.button5 {border-radius: 1px;
+     margin-left:150px;        
+    width: 240px;
+    }
+
+</style>
+</head>
+<body>
+
+     <form class="form-horizontal" id="message_forms" action="" method="post">
+    <p class="button button4">Enter Weekly Data</p><br/>
+    <p class="button1">Enter the Week &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><input required id="date_id" placeholder="2018/01/01 - 01/07" class="button2" type="text" name="date"/><br/>
+     <p class="button1">No. of Customers &nbsp;&nbsp;</p><input required id="customer_id" placeholder="no of customer here" class="button2" type="text" name="date"/><br/>
+    <p class="button1">Enter Total Income</p><input required id="income_id" placeholder="no of customer here" class="button2" type="text" name="date"/><br/>
+<p class="button1">Enter Total Expense</p><input id="expense_id" required placeholder="no of customer here" class="button2" type="text" name="date"/><br/>
+
+	<button class="button button5" type="submit" id="submit_form" class="btn btn-lg btn-default">Submit</button>
+	<button class="button button5" type="clear" id="clear_form" class="btn btn-lg btn-default">Clear</button>
+    </form>
+    
+<script type="text/javascript">
+function post_requests() {
+    var xhr = new XMLHttpRequest();
+    var params = JSON.stringify({
+        Records:{
+            date: document.getElementById("date_id").value,
+            customer: document.getElementById("customer_id").value,
+            income: document.getElementById("income_id").value,
+            expense: document.getElementById("expense_id").value
+        }
+    });
+    xhr.open("POST", "https://q6m9380ndg.execute-api.us-east-1.amazonaws.com/prod/weekly", true);
+    xhr.setRequestHeader("X-api-key", "LvT1JFGd2j8LxWm9uL7CW6AZFx6s7OCknxsHRhGg");
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.onreadystatechange = function(){
+        if(xhr.readyState === 4){
+           if(xhr.status === 200){
+                alert("Data is send to the dynamodb");
+            }
+            else{
+                alert("I was unable to send your data. Please check errors.");
+            }
+        }
+    };
+    xhr.send(params);
+    return false;
+}
+(function() {
+    document.getElementById("message_forms").onsubmit = function() {
+        post_requests();
+	    return false;
+    }
+})();
+
+</script>
+    
+</body>    
+</html>
+

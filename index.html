@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+	body{
+		background-image:url("boudha.jpg");
+	}
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 40px;
+    margin: 4px 2px;
+    cursor: pointer;
+	margin-top:100px;
+	margin-left: 100px;
+}
+	
+.search {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 23px;
+    margin: 4px 2px;
+    cursor: pointer;
+	margin-top:100px;
+	margin-left: 100px;
+}
+
+.button4 {border-radius: 12px;}
+</style>
+</head>
+<body>
+
+<a class="button button4" href="daily.html"> Enter Daily Data</a>
+<a class="button button4" href="weekly.html">Enter Weekly Data</a><br/>
+
+<a class="button button4" href="view_daily.html"> View Daily Data</a>
+<a class="button button4" href="view_weekly.html">View Weekly Data</a><br/>
+
+<input placeholder="Enter date(eg:2011/01/01)" type="text" id="search_daily" class="search button4"/>	
+<input placeholder="Week(eg:2011/01/01-01/07)" type="text" id="search_weekly" class="search button4"/>
+
+<script>
+var input = document.getElementById("search_daily");
+input.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+
+	alert("Data is loading from server. Press OK to view data");
+
+		
+	   var xhr = new XMLHttpRequest();
+       var params = JSON.stringify({
+           Records:{
+               date: document.getElementById("search_daily").value
+
+           }
+
+       });
+       xhr.open("POST", "https://kr03ujmlxh.execute-api.us-east-1.amazonaws.com/search/searching", true);
+       xhr.setRequestHeader("X-api-key", "24o6OY34UM1bDWs309AZC7556moD3U4S9WMx3hVD");
+       xhr.setRequestHeader("Content-type", "application/json");
+       xhr.onreadystatechange = function(){
+           if(xhr.readyState === 4){
+               if(xhr.status === 200){
+				   var a = xhr.responseText;
+                   var b = JSON.parse(a);
+				   //var date = b.res[0];
+				   alert("Date : "+b["date"]+"\n No. of Customer : "+b["customer"]+"\n Total Income : "+b["income"]+"\n Total Expense : "+b["expense"]);
+               }
+               else{
+                   alert("I was unable to recieve your data. Please check errors.");
+               }
+           }
+       };
+       xhr.send(params);
+       return false;
+		
+		
+		
+		
+		
+		
+		
+    }
+});
+
+var input = document.getElementById("search_weekly");
+input.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+
+	alert("Data is loading from server. Press OK to view data");
+
+		
+	   var xhr = new XMLHttpRequest();
+       var params = JSON.stringify({
+           Records:{
+               date: document.getElementById("search_weekly").value
+
+           }
+
+       });
+       xhr.open("POST", "https://4llde0crl6.execute-api.us-east-1.amazonaws.com/weekly-search/weekly", true);
+       xhr.setRequestHeader("X-api-key", "sOR5QqCq2Q5m6fN8aNYs04FRyppFEftl8lswKVJj");
+       xhr.setRequestHeader("Content-type", "application/json");
+       xhr.onreadystatechange = function(){
+           if(xhr.readyState === 4){
+               if(xhr.status === 200){
+				   var a = xhr.responseText;
+                   var b = JSON.parse(a);
+				   //var date = b.res[0];
+				   alert("Date : "+b["date"]+"\n No. of Customer : "+b["customer"]+"\n Total Income : "+b["income"]+"\n Total Expense : "+b["expense"]);
+               }
+               else{
+                   alert("I was unable to recieve your data. Please check errors.");
+               }
+           }
+       };
+       xhr.send(params);
+       return false;
+		
+		
+		
+		
+		
+		
+		
+    }
+});
+	
+	
+</script>	
+</body>
+</html>
+
